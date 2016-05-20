@@ -15,7 +15,7 @@
      loginURL: BASE_ADDRESS + "/login",
      
     //首页模块
-    //banner
+    //banner and activity
     homeBannerURL: BASE_ADDRESS + "/ec/queryAds",
     //stateBar
     homeStateBarURL: BASE_ADDRESS + "/ec/queryTopClass",

@@ -16,10 +16,11 @@ import {
 class StatedBar extends React.Component {
     constructor(props) {
         super(props);
+        this.handleCateChage = this.handleCateChage.bind(this);
     }
     
     handleCateChage(pageId, pageName) {
-         Alert.alert(pageName);
+         this.props.navigator.push({name: "searchPage", categoryId:pageId, title:pageName});
     };
     
     _renderNextButtons() {
@@ -31,7 +32,7 @@ class StatedBar extends React.Component {
         });
     };
     
-    _renderBarButtons() {
+    render() {
         return (
             <ScrollView style={styles.barPreButtons}
                horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -43,22 +44,13 @@ class StatedBar extends React.Component {
             </ScrollView>
         )
     };
-    
-    render() {
-        return (
-            <ScrollView style={styles.container} >
-                {this._renderBarButtons()}
-            </ScrollView>
-        )
-    };
 }
 
 var styles = StyleSheet.create ({
-    container: {
-        flex: 1
-    },
     barPreButtons: {
+        height: 66,
         flexDirection: 'row',
+        backgroundColor: 'white'
     }
 })
 

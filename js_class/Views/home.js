@@ -5,6 +5,7 @@ import AdjBanner    from '../Components/banner';
 import Fetcher      from '../Common/Fetcher';
 import StatedBar    from '../Components/statedBar';
 import LimitedGrab  from '../Components/limitedGrab';
+import ChoiceAct    from '../Components/choiceActivity'; 
 import Tools        from '../Common/Tools';
 import {
     View,
@@ -24,7 +25,8 @@ class Home extends React.Component {
         this.state = {
             bannerSource: null,
             stateBarSource: null,
-            limitGrabSource: null
+            limitGrabSource: null,
+            activitySource: null
         };
     };
 
@@ -32,12 +34,14 @@ class Home extends React.Component {
         this._fetchAdjBanner();
         this._fetchStateBar();
         this._fetchLimitedGrab();
+        this._fetchActivity();
     };
     
     render() {
         let adjArray    = this.state.bannerSource || [];
         let stateArray  = this.state.stateBarSource || []; 
         let grabArray   = this.state.limitGrabSource || [];
+        let chicArray   = this.state.activitySource || [];
         return (
             <View style={styles.container} >
                 <ScrollView style={styles.scrollView}
@@ -46,6 +50,7 @@ class Home extends React.Component {
                 >
                     <AdjBanner adjBannerData={adjArray} navigator={this.props.navigator} />
                     <StatedBar stateBarData={stateArray} navigator={this.props.navigator} />
+                    <ChoiceAct chicActivityData={chicArray} navigator={this.props.navigator} />
                     <LimitedGrab grabSource={grabArray} navigator={this.props.navigator} />
                 </ScrollView>
             </View>
@@ -55,8 +60,7 @@ class Home extends React.Component {
     
     /**
      * got net data
-     */
-    
+     */ 
      _fetchStateBar() {
       Fetcher.getHomeStateBar()
       .then((responseObj) => {
@@ -93,13 +97,25 @@ class Home extends React.Component {
         .catch((error) => {
             console.log("got error at limitedGrab: " +error);
         });
+    };
+    
+    _fetchActivity() {
+        Fetcher.getHomeActivity()
+        .then((responseObj) => {
+           this.setState ({
+               activitySource: responseObj.adResults
+           }) 
+        })
+        .catch((error) => {
+            console.log("got error at adjbanner: " +error);
+        });
     }
 };
 
 var styles = StyleSheet.create ({
    container: {
        flex: 1,
-      // marginTop: 64,
+       marginTop: 34,
    },
    scrollView: {
        flexDirection: 'column',

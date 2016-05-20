@@ -11,17 +11,27 @@ import Setting  from './js_class/Views/setting.js';
 import Detail   from './js_class/Views/detailPage.js';
 import Error    from './js_class/Views/errorPage.js';
 import WebPage  from './js_class/Views/webPage';
+import Search   from './js_class/Views/search';
 import {
   AppRegistry,
   StyleSheet,
   TouchableOpacity,
   Navigator,
   StatusBar,
+  TabBarIOS,
   Text,
   View
 } from 'react-native';
 
 class SJReactShop extends Component {
+  constructor(props) {
+     super(props);
+     this.state = {
+       selectedTab: 'homeTab'
+     }
+     this._renderIndexPageOfBar = this._renderIndexPageOfBar.bind(this);  
+  };
+  
   _renderScene(route, nav) {
     switch(route.name) {
       case 'home':
@@ -33,7 +43,9 @@ class SJReactShop extends Component {
       case 'detailPage':
           return <Detail navigator={nav} goodId={route.goodId}/>;
       case 'webPage':
-          return <WebPage navigator={nav} bannerURL={route.url} />
+          return <WebPage navigator={nav} bannerURL={route.url} />;
+      case 'searchPage':
+          return <Search navigator={nav} categoryId={route.cateId}/>;
       default: 
           return <Error navigator={nav} />;
     }
@@ -47,15 +59,14 @@ class SJReactShop extends Component {
     )
   };
   
-  render() {
-    return (
-      <View style={{flex:1}}>
+  _renderIndexPageOfBar(pageName, pageTitle) {
+      return (
         <Navigator 
          configureScene = {(route) => {
             if (route.seceneConfig) return route.sceneConfig;
-            return Navigator.SceneConfigs.FloatFromRight;
+            return Navigator.SceneConfigs.VerticalDownSwipeJump;
           }}
-          initialRoute={{name: 'home', title:"首页",index:0}}
+          initialRoute={{name: pageName, title:pageTitle,index:0}}
           renderScene={this._renderScene}
           navigationBar={
             <Navigator.NavigationBar
@@ -63,8 +74,46 @@ class SJReactShop extends Component {
             style={styles.navBar}
           />}
         />
-      </View>
-     
+      );
+  };
+  
+  render() {
+    let homeIcon              = require('./js_class/Images/footer_home_icon.png');
+    let shopIcon              = require('./js_class/Images/footer_shopping_cart_icon.png');
+    let settingIcon           = require('./js_class/Images/footer_user_icon.png');
+    return (
+      <TabBarIOS tintColor={"green"}>
+        <TabBarIOS.Item 
+          style ={styles.tabIcon}
+          icon = {homeIcon}
+          selected = {this.state.selectedTab === 'homeTab'}
+          onPress = {() => {
+            this.setState ({selectedTab: 'homeTab'});
+          }}
+        >
+            {this._renderIndexPageOfBar('home', '首页')}
+        </TabBarIOS.Item>
+        <TabBarIOS.Item 
+          style ={styles.tabIcon}
+          icon={shopIcon}
+          selected = {this.state.selectedTab === 'shopTab'}
+          onPress = {() => {
+            this.setState ({selectedTab: 'shopTab'});
+          }}
+        >
+            {this._renderIndexPageOfBar('shop', '购物车')}
+        </TabBarIOS.Item>
+        <TabBarIOS.Item 
+          style ={styles.tabIcon}
+          icon={settingIcon}
+          selected = {this.state.selectedTab === 'settingTab'}
+          onPress = {() => {
+            this.setState ({selectedTab: 'settingTab'});
+          }}
+        >
+            {this._renderIndexPageOfBar('setting', '个人中心')}
+        </TabBarIOS.Item>
+      </TabBarIOS>
     );
   }
 }
@@ -118,6 +167,9 @@ var NavigationBarRouteMapper = {
 };
 
 const styles = StyleSheet.create({
+  tabIcon: {
+    marginTop: 15,
+  },
   navBar: {
     backgroundColor: 'white',
   },

@@ -27,6 +27,7 @@ class LimitedGrab extends React.Component {
        };  
        this.endDate = 0;
        this.setTime = false;
+       this._renderRow = this._renderRow.bind(this);
     };
     
     componentWillUnmount() {
@@ -40,6 +41,7 @@ class LimitedGrab extends React.Component {
                 desc = {rowData.title}
                 curPrice = {rowData.price}
                 oldPrice = {rowData.msrp}
+                navigator = {this.props.navigator}
             />
         )
     };

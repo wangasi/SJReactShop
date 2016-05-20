@@ -14,9 +14,14 @@ import {
 
 class SimpleGoodButton extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this._openDetailPage = this._openDetailPage.bind(this);  
+    };
+
     _openDetailPage(id) {
-        alert(id);
-        //navigator.push({name: "detailPage", title:"商品详情", goodId:id});
+        //alert(id);
+        this.props.navigator.push({name: "detailPage", title:"商品详情", goodId:id});
     };
 
     render() {

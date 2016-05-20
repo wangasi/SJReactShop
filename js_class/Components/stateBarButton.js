@@ -14,7 +14,7 @@ import {
 const screenWidth   = Tools.getScreenWidth();
 
 class StateBarButton extends React.Component {
- 
+
     render() {
         return (
             <View style={styles.container}>
@@ -35,7 +35,7 @@ class StateBarButton extends React.Component {
 var styles = StyleSheet.create ({
    container: {
        flexDirection: 'row',
-       alignItems: 'center'
+       alignItems: 'center',
    },
    itemTab: {
       justifyContent: 'center',

@@ -1,6 +1,7 @@
 /*
 *   banner component 
 */
+'use strict';
 
 import React, { Component } from 'react';
 import ViewPager    from 'react-native-viewpager';
@@ -15,18 +16,27 @@ import {
     Image,
 } from 'react-native';
 
+const screenWidth   = Tools.getScreenWidth();
+const screenHeigth  = Tools.getScreenHeight();
+
 type Adj = {
   id: number;
   name: string;
   img: Array<string>;
 };
 
-const screenWidth   = Tools.getScreenWidth();
-const screenHeigth  = Tools.getScreenHeight();
+type Props = {
+    adjBannerData: Array<Adj>;
+    navigator: Navigator;
+};
 
 class AdjBanner extends React.Component {
-    props: {
-        adjBannerData: Array<Adj>;
+    props: Props;
+    
+    constructor(props) {
+        super(props);
+        this._onBannerItemClicked = this._onBannerItemClicked.bind(this);
+        this._renderBannerItems = this._renderBannerItems.bind(this);
     };
     
     /*
@@ -34,9 +44,8 @@ class AdjBanner extends React.Component {
     * URL: go to webview
     * paramer: paramers next page needs
     */
-    
     _onBannerItemClicked(adjURL: string) {
-        this.props.navigator.push({ name: 'WebPage',url: adjURL });
+         this.props.navigator.push({ name: 'WebPage',url: adjURL });
     };
     
     _renderBannerItems(item: object, pageId: number|string) {
@@ -44,9 +53,7 @@ class AdjBanner extends React.Component {
         let imgURL  = Tools.getPictureAsQuality_500W(item.img[0]);
             return (
                 <View style={styles.container}>
-                    <TouchableWithoutFeedback onPress={() => {
-                        Alert.alert('test');
-                    }} >
+                    <TouchableWithoutFeedback onPress={() => this._onBannerItemClicked(imgURL)} >
                         <Image source = {{uri: imgURL}} 
                             resizeMode = "contain"
                             style={styles.bannerImage} />

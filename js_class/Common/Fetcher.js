@@ -64,8 +64,15 @@ function getHomeLimitedGrab() {
      return baseNetworkRequery(grabURL, body);
 }
 
+function getHomeActivity() {
+    let activityURL = ApiURL.homeBannerURL + '?adTag=精选活动';
+    let body        = '';
+    return baseNetworkRequery(activityURL, body);
+}
+
 module.exports = {
     getHomeAdjBanner,
     getHomeStateBar,
-    getHomeLimitedGrab
+    getHomeLimitedGrab,
+    getHomeActivity
 }
