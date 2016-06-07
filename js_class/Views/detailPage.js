@@ -1,4 +1,7 @@
-//详情页
+/**
+ * 商品详情页
+ * goodId: 商品ID，needed, number
+ */
 
 import React, { Component } from 'react';
 import {
@@ -8,8 +11,16 @@ import {
 }from 'react-native';
 
 class DetailPage extends React.Component{
+    constructor(props){
+        super(props);    
+    }
+    
     render() {
-        return (<View></View>);
+        return (
+            <View>
+                <Image />
+            </View>
+       );
     }
 };
 

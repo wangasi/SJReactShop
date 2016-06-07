@@ -6,10 +6,12 @@ import Fetcher      from '../Common/Fetcher';
 import StatedBar    from '../Components/statedBar';
 import LimitedGrab  from '../Components/limitedGrab';
 import ChoiceAct    from '../Components/choiceActivity'; 
+import SingleRecom  from '../Components/singleRecom';
 import Tools        from '../Common/Tools';
 import {
     View,
     Text,
+    Animated,
     StyleSheet,
     ScrollView,
     StatusBar,
@@ -26,7 +28,8 @@ class Home extends React.Component {
             bannerSource: null,
             stateBarSource: null,
             limitGrabSource: null,
-            activitySource: null
+            activitySource: null,
+            singleRecomSource: null,
         };
     };
 
@@ -35,6 +38,7 @@ class Home extends React.Component {
         this._fetchStateBar();
         this._fetchLimitedGrab();
         this._fetchActivity();
+        this._fetchSingleRecom();
     };
     
     render() {
@@ -42,6 +46,7 @@ class Home extends React.Component {
         let stateArray  = this.state.stateBarSource || []; 
         let grabArray   = this.state.limitGrabSource || [];
         let chicArray   = this.state.activitySource || [];
+        let recomArray  = this.state.singleRecomSource || [];
         return (
             <View style={styles.container} >
                 <ScrollView style={styles.scrollView}
@@ -52,9 +57,9 @@ class Home extends React.Component {
                     <StatedBar stateBarData={stateArray} navigator={this.props.navigator} />
                     <ChoiceAct chicActivityData={chicArray} navigator={this.props.navigator} />
                     <LimitedGrab grabSource={grabArray} navigator={this.props.navigator} />
+                    <SingleRecom recomSource={recomArray} navigator={this.props.navigator}/>
                 </ScrollView>
             </View>
-            
         );
     };
     
@@ -76,6 +81,7 @@ class Home extends React.Component {
     _fetchAdjBanner() {
         Fetcher.getHomeAdjBanner()
         .then((responseObj) => {
+            if (!responseObj.adResults || !responseObj.adResults.length) return;
            this.setState ({
                bannerSource: responseObj.adResults
            }) 
@@ -102,12 +108,26 @@ class Home extends React.Component {
     _fetchActivity() {
         Fetcher.getHomeActivity()
         .then((responseObj) => {
+           if (!responseObj.adResults || !responseObj.adResults.length) return;
            this.setState ({
                activitySource: responseObj.adResults
            }) 
         })
         .catch((error) => {
             console.log("got error at adjbanner: " +error);
+        });
+    }
+    
+    _fetchSingleRecom() {
+        Fetcher.getHomeSingleRecom() 
+        .then((responseObj) => {
+            if (!responseObj.itemTag || !responseObj.itemTag.单品推荐 || !responseObj.itemTag.单品推荐.length) return;
+            this.setState ({
+                singleRecomSource: responseObj.itemTag.单品推荐
+            })
+        })
+        .catch((error) => {
+            console.log("got error at singleRecom: " +error);
         });
     }
 };

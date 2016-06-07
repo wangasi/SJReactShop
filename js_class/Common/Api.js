@@ -10,8 +10,10 @@
  var BASE_ADDRESS  = 'http://apitest.bestinfoods.com/apiserver/api';
  
  module.exports = {
-     //登录模块
-     //登录
+     /**
+      * 登录模块
+      */
+      //登录
      loginURL: BASE_ADDRESS + "/login",
      
     //首页模块
@@ -21,5 +23,15 @@
     homeStateBarURL: BASE_ADDRESS + "/ec/queryTopClass",
     //limited grab
     homeGrabURL: BASE_ADDRESS + "/ec/queryItems",
+    //singleRecom
+    homeRecomURL: BASE_ADDRESS + '/ec/queryItems',
+    
+    /**
+     * 商品详情
+     */
+    //关注
+    followBrandURL: BASE_ADDRESS + '/ec/focusBrand',
+    //取消关注
+    cancelFollowBrandURL: BASE_ADDRESS + '/ec/cancleFocusBrand',
  }
 

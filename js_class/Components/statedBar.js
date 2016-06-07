@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import Tools        from '../Common/Tools';
-import BarButton    from './stateBarButton';
+import BarButton    from './buttons/stateBarButton';
 import {
     StyleSheet,
     Text,

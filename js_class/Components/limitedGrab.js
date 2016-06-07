@@ -3,7 +3,7 @@
  */
 
 import React,{Component}     from 'react';
-import SimpleGoodButton      from './simpleGoodButton';
+import SimpleGoodButton      from './buttons/simpleGoodButton';
 import Tools                 from '../Common/Tools';
 import ModuleTitle           from './moduleTitle';
 import {
@@ -116,7 +116,7 @@ class LimitedGrab extends React.Component {
                     initialListSize = {8}
                     dataSource = {grabData}
                     renderRow = {this._renderRow}
-                    pageSize = {3}
+                    pageSize = {2}
                     enableEmptySections = {true}
                 />
                 <View style={styles.footerView}>
@@ -145,7 +145,7 @@ var styles = StyleSheet.create ({
     },
     countTimeView: {
         marginTop:-13,
-        marginLeft: screenWidth-136,
+        marginLeft: screenWidth-130,
         flexDirection:'row',
         height:13,
         width:124

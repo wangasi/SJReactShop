@@ -9,6 +9,7 @@ import Tools  from './Tools';
 import React, {
     AsyncStorage
 } from 'react-native';
+//const assert = require('assert');
 
 function baseNetworkRequery(queryURL, paramer) {
     return new Promise((resolve, reject) => {
@@ -27,6 +28,7 @@ function baseNetworkRequery(queryURL, paramer) {
         })
         .then((response) => response.json())
         .then((responseObj) => {
+            //console.log(responseObj);
             if (responseObj.errorcode === '0') {
                 resolve(responseObj.data);
             }else {
@@ -64,15 +66,48 @@ function getHomeLimitedGrab() {
      return baseNetworkRequery(grabURL, body);
 }
 
+//精选活动
 function getHomeActivity() {
     let activityURL = ApiURL.homeBannerURL + '?adTag=精选活动';
     let body        = '';
     return baseNetworkRequery(activityURL, body);
 }
 
+//单品推荐
+function getHomeSingleRecom() {
+    let recomURL    = ApiURL.homeRecomURL + '?criterion=[{"criterion":"itemTag","value":"单品推荐","byWhat":"","byWhatValue":"","sortBy":"upTimeFar","groupBy":"goodTags"}]';
+    let body        = "";
+    return baseNetworkRequery(recomURL, body);
+}
+
+/**
+ * 关注品牌
+ * 参数：品牌Id
+ */
+function followBrand(brandId) {
+    //assert(brandId && typeof brandId === 'number');
+    let followURL   = ApiURL.followBrandURL + '?brandId=' + brandId;
+    let body        = "";
+    return baseNetworkRequery(followURL, body);
+}
+
+/**
+ * 取消品牌关注
+ * 参数：品牌ID
+ */
+function cancelFollowBrand(brandId) {
+    //assert(brandId && typeof brandId === 'number');
+    let followURL   = ApiURL.cancelFollowBrandURL + '?brandId=' + brandId;
+    let body        = "";
+    return baseNetworkRequery(followURL, body);
+}
+
 module.exports = {
     getHomeAdjBanner,
     getHomeStateBar,
     getHomeLimitedGrab,
-    getHomeActivity
+    getHomeActivity,
+    getHomeSingleRecom,
+    followBrand,
+    cancelFollowBrand
 }

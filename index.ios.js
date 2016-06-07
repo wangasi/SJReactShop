@@ -5,13 +5,14 @@
  */
 
 import React, { Component } from 'react';
-import Home     from './js_class/Views/home.js';
-import Login    from './js_class/Views/login.js';
-import Setting  from './js_class/Views/setting.js';
-import Detail   from './js_class/Views/detailPage.js';
-import Error    from './js_class/Views/errorPage.js';
-import WebPage  from './js_class/Views/webPage';
-import Search   from './js_class/Views/search';
+import Home          from './js_class/Views/home.js';
+import Login         from './js_class/Views/login.js';
+import SettingPage   from './js_class/Views/setting.js';
+import Detail        from './js_class/Views/detailPage.js';
+import Error         from './js_class/Views/errorPage.js';
+import WebPage       from './js_class/Views/webPage';
+import Search        from './js_class/Views/search';
+import DetailBrand   from './js_class/Views/brandDetail.js';
 import {
   AppRegistry,
   StyleSheet,
@@ -39,13 +40,15 @@ class SJReactShop extends Component {
       case 'login':
           return <Login navigator={nav} />;
       case 'setting':
-          return <Setting navigator={nav} />;
+          return <SettingPage navigator={nav} />;
       case 'detailPage':
           return <Detail navigator={nav} goodId={route.goodId}/>;
       case 'webPage':
           return <WebPage navigator={nav} bannerURL={route.url} />;
       case 'searchPage':
           return <Search navigator={nav} categoryId={route.cateId}/>;
+      case 'brandDetail':
+          return <DetailBrand navigator={nav} brandId={route.brandId} />;
       default: 
           return <Error navigator={nav} />;
     }
@@ -60,6 +63,9 @@ class SJReactShop extends Component {
   };
   
   _renderIndexPageOfBar(pageName, pageTitle) {
+      let navBar = pageName === 'setting' ? null : <Navigator.NavigationBar
+            routeMapper={NavigationBarRouteMapper}
+            style={styles.navBar}/>;
       return (
         <Navigator 
          configureScene = {(route) => {
@@ -68,23 +74,19 @@ class SJReactShop extends Component {
           }}
           initialRoute={{name: pageName, title:pageTitle,index:0}}
           renderScene={this._renderScene}
-          navigationBar={
-            <Navigator.NavigationBar
-            routeMapper={NavigationBarRouteMapper}
-            style={styles.navBar}
-          />}
+          navigationBar={ navBar}
         />
       );
   };
   
   render() {
-    let homeIcon              = require('./js_class/Images/footer_home_icon.png');
-    let shopIcon              = require('./js_class/Images/footer_shopping_cart_icon.png');
-    let settingIcon           = require('./js_class/Images/footer_user_icon.png');
+    let homeIcon              = require('./js_class/Images/Tabbar_HomePage@2x.png');
+    let shopIcon              = require('./js_class/Images/Tabbar_ShoppingCart@2x.png');
+    let settingIcon           = require('./js_class/Images/Tabbar_Mine@2x.png');
     return (
-      <TabBarIOS tintColor={"green"}>
+      <TabBarIOS tintColor={"red"}>
         <TabBarIOS.Item 
-          style ={styles.tabIcon}
+          title= "首页"
           icon = {homeIcon}
           selected = {this.state.selectedTab === 'homeTab'}
           onPress = {() => {
@@ -94,8 +96,8 @@ class SJReactShop extends Component {
             {this._renderIndexPageOfBar('home', '首页')}
         </TabBarIOS.Item>
         <TabBarIOS.Item 
-          style ={styles.tabIcon}
           icon={shopIcon}
+          title = "购物车"
           selected = {this.state.selectedTab === 'shopTab'}
           onPress = {() => {
             this.setState ({selectedTab: 'shopTab'});
@@ -104,8 +106,8 @@ class SJReactShop extends Component {
             {this._renderIndexPageOfBar('shop', '购物车')}
         </TabBarIOS.Item>
         <TabBarIOS.Item 
-          style ={styles.tabIcon}
           icon={settingIcon}
+          title = "我的"
           selected = {this.state.selectedTab === 'settingTab'}
           onPress = {() => {
             this.setState ({selectedTab: 'settingTab'});
@@ -167,11 +169,8 @@ var NavigationBarRouteMapper = {
 };
 
 const styles = StyleSheet.create({
-  tabIcon: {
-    marginTop: 15,
-  },
   navBar: {
-    backgroundColor: 'white',
+    backgroundColor: 'yellow',
   },
    navBarText: {
     fontSize: 16,

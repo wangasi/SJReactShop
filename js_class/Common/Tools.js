@@ -3,6 +3,7 @@
 */
 import Dimensions   from 'Dimensions';
 import React, {
+    NetInfo,
     Platform,
 }from 'react-native';
 
@@ -27,7 +28,7 @@ function getScreenWidth() {
 }
 
 function getScreenHeight() {
-    return Dimensions.get('window').heigth;
+    return Dimensions.get('window').height;
 }
 
 function getPictureAsQuality_500W(url) {
@@ -65,5 +66,16 @@ function pictureQuality_Base(imgURL, width, quality) {
      * when at 4g/3g turn down the quality
      * in wifi use best quality,and 2g turn to worst quality
      */
-    return imgURL+'@'+width+'w_Q'+quality; 
+    return imgURL+'@'+width+'w_Q'+quality;
+    
+     // NetInfo.fetch().done((reach) => {
+    //    if (reach === 'wifi') {
+    //        return imgURL+'@'+width+'w_Q'+quality;
+    //    }else if (reach === 'cell') {
+    //        return imgURL+'@'+width+'w_Q'+(quality/2);
+    //    }else {
+    //        //offline 暂时未处理
+    //    }
+    // });
+
 }
