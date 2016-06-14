@@ -40,6 +40,38 @@ function getPictureAsQuality_200W(url) {
 }
 
 /**
+ * 判断用户名是否合法，暂时只包含手机号是否合法
+ * 参数：userName, 用户名，string
+ * 返回：true - 合法，false - 不合法
+ */
+function userNameIsValid(userName) {
+    var regex = new RegExp('^((13[0-9])|(147)|(15[0-9])|(18[0-9])|(17[0-9]))\\d{8}$');
+    return regex.test(userName);
+}
+
+/**
+ * 判断密码是否有效
+ * 参数：password，密码，string
+ * 返回：true - 合法，false - 不合法
+ */
+function passwordIsValid(password) {
+    //判断是否符合标准1 不能为同一个字符,不能全是数字,只能有数字、字母和常用特殊字符 长度6-20
+    var regex = new RegExp('^[a-zA-Z0-9]{6,20}$');
+    return regex.test(password);
+}
+
+/**
+ * 判断昵称是否有效
+ * 参数：nickName，昵称，string
+ * 返回：true - 合法，false - 不合法
+ */
+function nickNameIsValid(nickName) {
+    //长度32,特殊字符除了下划线
+    var regex = new RegExp('^[\\u4E00-\\u9FA5\\uF900-\\uFA2D\\w]{0,32}+$');
+    return regex.test(nickName);
+}
+
+/**
  * paramers' base url prevent api unclear cirumstances
  */
 module.exports = {
@@ -50,6 +82,9 @@ module.exports = {
     getPictureAsQuality_500W,
     getPictureAsQuality_200W,
     
+    userNameIsValid,
+    passwordIsValid,
+    nickNameIsValid,
     /**
      * banner jump to webView base url
      */

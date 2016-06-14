@@ -9,6 +9,7 @@ import {
     Image,
     StyleSheet,
     ScrollView,
+    TouchableOpacity,
 }from 'react-native';
 
 const screenWidth       = Tools.getScreenWidth();
@@ -20,7 +21,15 @@ const section_two_1     = 50 * (screenWidth/375);
 const section_two_2     = 68 * (screenWidth/375);
 
 class SettingPage extends React.Component {
-    
+    constructor(props) {
+        super(props);
+        this._gotoLogin = this._gotoLogin.bind(this);
+    };
+
+    _gotoLogin() {
+        this.props.navigator.push({name:'login', title: '登录'});
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -28,6 +37,22 @@ class SettingPage extends React.Component {
                     <Image source={require('../Images/MineLogo.png')}
                         style={{width: screenWidth, height:bacImageHeight}}
                     />
+                    <TouchableOpacity >
+                        <Image source={require('../Images/settingBtn.png')}
+                            style={{marginTop:-bacImageHeight+30,marginLeft: screenWidth-25, height: 16, width: 16}}
+                        />
+                    </TouchableOpacity>  
+                    <View>
+                        <TouchableOpacity onPress={this._gotoLogin}
+                            style={{marginTop: -bacImageHeight+65,marginLeft: screenWidth/2-40}}>
+                            <Image source={require('../Images/defaultIcon@2x.png')} 
+                                style={{height:80,width:80,}}
+                            />
+                        </TouchableOpacity>
+                        <View style={styles.loginText}>
+                            <Text style={{color:'gray', fontSize:12}} onPress={this._gotoLogin}>点击登录</Text>
+                        </View>
+                    </View> 
 
                     <View style={styles.firstView}>
                         <View style={styles.collectView}>
@@ -69,6 +94,15 @@ var styles = StyleSheet.create ({
     container: {
        flex: 1,
        marginTop: -20
+   },
+   loginText: {
+       marginTop: 8,
+       width: 80,
+       height: 25,
+       marginLeft: screenWidth/2-40,
+       backgroundColor: 'white',
+       alignItems: 'center',
+       justifyContent: 'center'
    },
    scrollView: {
        flexDirection: 'column',

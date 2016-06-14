@@ -63,9 +63,10 @@ class SJReactShop extends Component {
   };
   
   _renderIndexPageOfBar(pageName, pageTitle) {
-      let navBar = pageName === 'setting' ? null : <Navigator.NavigationBar
+      let navBar =  pageName === 'setting' ? null : <Navigator.NavigationBar
             routeMapper={NavigationBarRouteMapper}
             style={styles.navBar}/>;
+
       return (
         <Navigator 
          configureScene = {(route) => {
@@ -74,7 +75,7 @@ class SJReactShop extends Component {
           }}
           initialRoute={{name: pageName, title:pageTitle,index:0}}
           renderScene={this._renderScene}
-          navigationBar={ navBar}
+           navigationBar={ navBar}
         />
       );
   };
@@ -170,7 +171,7 @@ var NavigationBarRouteMapper = {
 
 const styles = StyleSheet.create({
   navBar: {
-    backgroundColor: 'yellow',
+    backgroundColor: 'white',
   },
    navBarText: {
     fontSize: 16,
